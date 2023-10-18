@@ -32,7 +32,7 @@ const submit = () => {
             <div class="flex flex-col items-center mt-4">
                 <InputLabel for="email" value="Email" class="form-label" />
 
-                <TextInput 
+                <TextInput
                     id="email"
                     type="email"
                     class="mt-1 block w-full form-control"
@@ -64,7 +64,7 @@ const submit = () => {
     </GuestLayout>
 </template>
 
-<style scoped> 
+<style scoped>
 .welcome {
     color: #3C7FF8;
     font-weight: 800;
@@ -93,4 +93,3 @@ const submit = () => {
 }
 
 </style>
-  

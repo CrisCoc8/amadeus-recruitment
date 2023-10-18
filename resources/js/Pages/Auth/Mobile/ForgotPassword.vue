@@ -1,7 +1,6 @@
 <script setup>
 import MobileGuestLayout from '@/Layouts/Mobile/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import ButtonGeneric from '@/Components/ButtonGeneric.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
@@ -9,6 +8,19 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 const form = useForm({
     email: '',
 });
+
+
+/** Cristian Chavez
+ * En esta vista elimine el texto descriptivo original que tenia pero considero que es muy valido para mejor entendimiento al usuario.
+ *
+ * Un botón/texto para seria util
+ *
+ * El titulo es un area de oportunidad ("¿Quieres recuperar tu contraseña?"),
+ *
+ * Igual que el Login, agregar más feedback especifico al usuario y validaciones antes de hacer la petición y loading al boton.
+ *
+ * Dependiendo mi porcentaje de usuarios, usaria un breakpoint para dispositivos muy pequeños (iphone SE, 5, etc. max-height: 650px )
+ */
 
 const submit = () => {
     form.post(route('password.email'));
@@ -19,77 +31,147 @@ const submit = () => {
     <MobileGuestLayout>
         <Head title="Restablecer Contraseña" />
 
-        <form @submit.prevent="submit" class="flex flex-col justify-center h-full">
+        <form @submit.prevent="submit" class="flex flex-col h-full">
 
-            <div class="mt-6">
-                <h3 class="welcome">Recuperar Contraseña Móvil</h3>
+            <div class="password-container flex justify-center">
+                <h3 class="password-title">¿Quieres recuperar tu contraseña?</h3>
             </div>
 
-            <div class="mb-4 text-sm text-gray-900 ">
-                ¿Has olvidado tu contraseña? No hay problema. Solamente añade tu email y te enviaremos un enlace para establecer una nueva contraseña.
-            </div>
+            <div class="flex flex-col items-center input-container">
 
-            <div class="flex flex-col items-center mt-4">
-                <InputLabel for="email" value="Email" class="form-label" />
-
-                <TextInput 
+                <TextInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full form-control"
+                    class="mt-0 block w-full form-control"
                     v-model="form.email"
                     required
                     autofocus
+                    placeholder="Ingrese usuario o correo"
                     autocomplete="username"
                 />
 
                 <InputError class="mt-2 form-text" :message="form.errors.email" />
             </div>
 
-            <div class="block items-center mt-3">
+            <div class="button-container items-center">
                 <ButtonGeneric class="btn submit-button w-full" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Restablecer
                 </ButtonGeneric>
-            </div>
-
-            <div class="items-center mt-4 w-full">
-                <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Volver al inicio de sesión
-                </Link>
             </div>
         </form>
 
     </MobileGuestLayout>
 </template>
 
-<style scoped> 
-.welcome {
-    color: #3C7FF8;
-    font-weight: 800;
-    font-size: 2rem;
-    margin-bottom: 5vh;
+<style scoped>
+
+/* Estilos para móviles */
+@media only screen and (max-width: 599px) {
+    /* Estilos específicos para móviles aquí */
+
+    .password-container{
+        margin-top: 32.5vh;
+    }
+    .password-title {
+        color: #3C7FF8;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 1.5rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.85rem;
+        width: 76%;
+    }
+    .input-container{
+        margin-top: 9vh;
+    }
+    .form-label {
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: #222038;
+        text-align: start;
+        width: 75%;
+        margin-left: 1rem;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 2.5rem;
+        border-radius: 2rem;
+        border: 1px solid #2b5db6;
+        background: #fff;
+        font-size: 1rem;
+        text-align: center;
+        color: #2B5DB6;
+
+    }
+
+    .form-control::placeholder {
+    color: #9E9E9E;
+    }
+
+    .button-container > .btn {
+        height: 2.6rem;
+    }
+    .button-container{
+        margin-top: 14.75vh;
+    }
+    .submit-button {
+        font-size: 1rem;
+        width: 48%;
+        font-weight: 500;
+    }
 }
 
-.form-label {
-    font-weight: 600;
-    font-size: 1.2rem;
-    color: #222038;
-    text-align: start;
-    width: 75%;
-    margin-left: 1rem;
+/* Estilos para tablets y escritorios */
+@media only screen and (min-width: 600px) {
+    /* Estilos específicos para tablets y escritorios aquí */
+
+    .password-container{
+        margin-top: 30.5vh;
+    }
+    .password-title {
+        color: #3C7FF8;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 1.85rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 2rem;
+        width: 60%;
+    }
+    .input-container{
+        margin-top: 15vh;
+    }
+    .form-control {
+        width: 75%;
+        height: 2.5rem;
+        border-radius: 2rem;
+        border: 1px solid #2b5db6;
+        background: #fff;
+        font-size: 1rem;
+        text-align: center;
+        color: #2B5DB6;
+
+    }
+
+    .form-control::placeholder {
+    color: #9E9E9E;
+    }
+
+    .button-container > .btn {
+        height: 2.8rem;
+    }
+    .button-container{
+        margin-top: 14vh;
+    }
+    .submit-button {
+        font-size: 1.2rem;
+        width: 35%;
+        font-weight: 500;
+    }
+
 }
 
-.form-control {
-    width: 75%;
-    height: 4rem;
-    border-radius: 2rem;
-    border: 1px solid #2b5db6;
-    background: #fff;
-    font-size: 1.5rem;
-    text-align: center;
-}
 
 </style>
-  
